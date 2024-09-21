@@ -19,15 +19,16 @@
                 subActiveRouter: ""
             }
         },
-        watch:{
-            // $route:function (to) {
-            //     // console.log('--->',to);
-            //     // this.subActiveRouter = to.matched[2].path;
-            // }
+        watch: {
+            $route:function (to) {
+                console.log('--->',to);
+                this.subActiveRouter = this.$route.matched[1].name;
+            }
         },
-        mounted(){
+        mounted() {
             // 获取当前的所有路由
-            // this.subActiveRouter = this.$route.matched[2].path;
+            this.subActiveRouter = this.$route.matched[1].name;
+            // console.log('检查路由表：', this.$route.matched[1].name)
         }
     }
 </script>

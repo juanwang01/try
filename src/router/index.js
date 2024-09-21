@@ -7,6 +7,10 @@ import ActivityView from "@/views/task/ActivityView";
 import PromoView from "@/views/task/PromoView";
 import FansView from "@/views/task/FansView";
 import StatView from "@/views/task/StatView";
+import MsgLayout from "@/views/msg/MsgLayout";
+import PushView from "@/views/msg/PushView";
+import SopView from "@/views/msg/SopView";
+import AuthView from "@/views/auth/AuthView";
 
 const routes = [
 
@@ -55,6 +59,28 @@ const routes = [
           },
         ]
 
+      },
+      {
+        path: '/msg',
+        name: 'Msg',
+        component: MsgLayout,
+        children:[
+          {
+            path: '/push',
+            name: 'Push',
+            component: PushView
+          },
+          {
+            path: '/sop',
+            name: 'Sop',
+            component: SopView
+          },
+        ]
+      },
+      {
+        path: '/auth',
+        name: 'Auth',
+        component: AuthView
       },
     ]
   },
