@@ -16,7 +16,7 @@
         name: "TaskLayout",
         data() {
             return {
-                subActiveRouter: ""
+                subActiveRouter: "Activity"
             }
         },
         watch: {
@@ -27,7 +27,7 @@
         },
         mounted() {
             // 获取当前的所有路由
-            this.subActiveRouter = this.$route.matched[1].name;
+            this.subActiveRouter = this.$route.matched[2].name;
             // console.log('检查路由表：', this.$route.matched[1].name)
         }
     }

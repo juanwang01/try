@@ -30,12 +30,13 @@
         name: "LayoutView",
         data() {
             return {
-                rootActiveRouter: ""
+                rootActiveRouter: "Task"
             }
         },
         mounted() {
             // 获取当前的所有路由
-            // this.rootActiveRouter = this.$route.matched[1].path;
+            this.rootActiveRouter = this.$route.matched[1].name;
+            console.log('检查第一层路由列表：',this.$route.matched)
         },
         computed: {
             username() {
