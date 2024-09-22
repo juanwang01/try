@@ -20,15 +20,24 @@
             }
         },
         watch: {
-            $route:function (to) {
-                console.log('--->',to);
-                this.subActiveRouter = this.$route.matched[1].name;
+            $route: function (to) {
+                console.log('--->', to);
+                this.subActiveRouter = this.$route.matched[2].name;
             }
         },
         mounted() {
             // 获取当前的所有路由
-            this.subActiveRouter = this.$route.matched[2].name;
-            // console.log('检查路由表：', this.$route.matched[1].name)
+            // 获取当前的所有路由
+            console.log('检查路由表1：', this.$route.matched);
+            try {
+                console.log('检查路由表：', this.$route.matched[2].name);
+                this.subActiveRouter = this.$route.matched[2].name;
+            } catch (error) {
+                console.error('获取路由时发生错误:', error);
+                // 重定向
+                this.$router.push({ name: 'Activity' });
+            }
+
         }
     }
 </script>

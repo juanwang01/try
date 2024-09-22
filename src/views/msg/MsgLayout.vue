@@ -14,7 +14,7 @@
         name: "MsgLayout",
         data() {
             return {
-                subActiveRouter: ""
+                subActiveRouter: "Push"
             }
         },
         mounted() {

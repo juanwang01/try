@@ -20,12 +20,12 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/',
+    path: '',
     name: 'Layout',
     component: LayoutView,
     children:[
       {
-        path: '',
+        path: '/',
         redirect:'/task'
       },
       {
@@ -34,7 +34,7 @@ const routes = [
         component: TaskLayout,
         children:[
           {
-            path: '',
+            path: '/',
             redirect:'/activity'
           },
           {

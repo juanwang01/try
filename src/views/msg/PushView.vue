@@ -1,5 +1,9 @@
 <template>
-    消息推送
+    <div>
+        <el-card style="padding:40px">
+
+        </el-card>
+    </div>
 </template>
 
 <script>
