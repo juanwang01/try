@@ -30,7 +30,7 @@
             // 获取当前的所有路由
             console.log('检查路由表1：', this.$route.matched);
             try {
-                console.log('检查路由表：', this.$route.matched[2].name);
+                console.log('检查路由表tasklayout', this.$route.matched[2].name);
                 this.subActiveRouter = this.$route.matched[2].name;
             } catch (error) {
                 console.error('获取路由时发生错误:', error);

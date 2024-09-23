@@ -19,7 +19,7 @@
         },
         mounted() {
             // 获取当前的所有路由
-            // this.subActiveRouter = this.$route.matched[2].name;
+            this.subActiveRouter = this.$route.matched[2].name;
         }
     }
 </script>

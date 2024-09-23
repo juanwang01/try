@@ -34,10 +34,15 @@
 
         </el-card>
         <el-card class="box-card">
-            <div slot="header" class="clearfix">
-                <span><i class="el-icon-menu"></i>消息列表</span>
-                <el-button type="success" style="float: right;margin-bottom: 10px" size="small" >操作按钮</el-button>
-            </div>
+            <template v-slot:header>
+                <div class="clearfix">
+                    <span><i class="el-icon-menu"></i>消息列表</span>
+                    <el-button plain @click="dialogFormVisible = true" type="success"
+                               style="float: right;margin-bottom: 10px" size="small"><i
+                            class="el-icon-circle-plus-outline"></i>创建推送
+                    </el-button>
+                </div>
+            </template>
             <!--          内容-->
             <div>
                 <el-table :data="tableData" border style="width: 100%">
@@ -49,21 +54,60 @@
                             <el-button link type="primary" size="small" @click="handleClick(scope.row)">
                                 查看
                             </el-button>
-<!--                            <el-button link type="primary" size="small">删除</el-button>-->
-                            <el-button plain @click="open(scope.row)" type="warning" size="small">删除</el-button>
+                            <!--                            <el-button link type="primary" size="small">删除</el-button>-->
+                            <el-button plain @click="deleteLine(scope.row)" type="warning" size="small">删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </div>
             <el-row type="flex" justify="end">
-                <el-pagination background layout="prev, pager, next" :total="pageInfo.total" @current-change="changePage" :page-size="pageInfo.pageSize"/>
+                <el-pagination background layout="prev, pager, next" :total="pageInfo.total"
+                               @current-change="changePage" :page-size="pageInfo.pageSize"/>
             </el-row>
         </el-card>
     </div>
+
+    <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
+        <el-form :model="createform" ref="createform">
+            <el-form-item label="Promotion name" :label-width="formLabelWidth">
+                <el-input v-model="createform.name" autocomplete="off" prop="name"/>
+            </el-form-item>
+            <el-form-item label="Zones" :label-width="formLabelWidth">
+                <el-select v-model="createform.region" placeholder="Please select a zone" prop="region">
+                    <el-option label="Zone No.1" value="shanghai"/>
+                    <el-option label="Zone No.2" value="beijing"/>
+                </el-select>
+            </el-form-item>
+        </el-form>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                <el-button type="primary" @click="commitInfo('createform')">
+                    Confirm
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
+
+    <el-dialog v-model="centerDialogVisible" title="Warning" width="500" center>
+    <span>
+      It should be noted that the content will not be aligned in center by
+      default
+    </span>
+        <template #footer>
+            <div class="dialog-footer">
+                <el-button type="primary" @click="centerDialogVisible = false">
+                   关闭
+                </el-button>
+            </div>
+        </template>
+    </el-dialog>
+
 </template>
 
 <script>
-    import { ElMessage, ElMessageBox } from 'element-plus'
+    import {ElMessage, ElMessageBox} from 'element-plus'
+
     export default {
         name: "PushView",
         data() {
@@ -120,9 +164,15 @@
                         address: '上海市普陀区金沙江路 1516 弄',
                         zip: 200333
                     }],
-                pageInfo:{
-                    total:200,
-                    pageSize:10
+                pageInfo: {
+                    total: 200,
+                    pageSize: 10
+                },
+                dialogFormVisible: false,
+                centerDialogVisible:false,
+                createform: {
+                    name: '',
+                    region: '',
                 }
             }
 
@@ -141,10 +191,12 @@
 
             },
             handleClick(row) {
-                console.log('检查是否能获取行：',row)
+                console.log('检查是否能获取行：', row)
+            //    关闭弹窗
+                this.centerDialogVisible = true
             },
-            open(row){
-                console.log('检查是否能获取行：',row);
+            deleteLine(row) {
+                console.log('检查是否能获取行：', row);
                 ElMessageBox.confirm(
                     '你确定要删除吗?',
                     'Warning',
@@ -154,23 +206,28 @@
                         type: 'warning',
                     }
                 ).then(() => {
-                        //todo：执行删除过程
-                        console.log('删除这一行的信息：',row)
-                        //发送成功信息
-                        ElMessage({
-                            type: 'success',
-                            message: 'Delete completed',
-                        })
-                    }).catch(() => {
-                        ElMessage({
-                            type: 'info',
-                            message: 'Delete canceled',
-                        })
+                    //todo：执行删除过程
+                    console.log('删除这一行的信息：', row)
+                    //发送成功信息
+                    ElMessage({
+                        type: 'success',
+                        message: 'Delete completed',
                     })
+                }).catch(() => {
+                    ElMessage({
+                        type: 'info',
+                        message: 'Delete canceled',
+                    })
+                })
 
             },
-            changePage(page){
-                console.log('我想查看这一页：',page)
+            changePage(page) {
+                console.log('我想查看这一页：', page)
+            },
+            commitInfo(formName) {
+                this.dialogFormVisible = false
+                //    获取表单，提交信息
+                console.log('测试是否获得表单：',this.$refs[formName].name)
             }
         }
 
@@ -178,7 +235,6 @@
 
 
 </script>
-
 
 
 <style scoped>

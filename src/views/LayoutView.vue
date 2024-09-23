@@ -3,7 +3,7 @@
         <!--顶部菜单-->
         <div>
             <el-menu class="el-menu-demo" mode="horizontal" background-color="#545c64"
-                     :default-active="rootActiveRouter"
+                     :default-active="subActiveRouter"
                      text-color="#fff" active-text-color="#ffd04b" router>
                 <el-menu-item>媒体宝系统</el-menu-item>
                 <el-menu-item index="Task" :route="{name:'Task'}">任务宝</el-menu-item>
@@ -30,13 +30,28 @@
         name: "LayoutView",
         data() {
             return {
-                rootActiveRouter: "Task"
+                subActiveRouter: "Msg"
+            }
+        },
+        watch: {
+            $route: function (to) {
+                console.log('--->', to);
+                this.subActiveRouter = to.matched[1].name;
             }
         },
         mounted() {
             // 获取当前的所有路由
-            this.rootActiveRouter = this.$route.matched[1].name;
-            console.log('检查第一层路由列表：',this.$route.matched)
+            console.log('检查路由表1：', this.$route.matched);
+            try {
+                console.log('检查路由表：', this.$route.matched[1].name);
+                this.subActiveRouter = this.$route.matched[1].name;
+                console.log('subActiveRouter等于：', this.$route.matched[1].name);
+            } catch (error) {
+                console.error('获取路由时发生错误,进行 重定向Task:', error);
+                // 重定向
+                this.$router.push({ name: 'Task' });
+            }
+
         },
         computed: {
             username() {
