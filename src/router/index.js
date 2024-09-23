@@ -3,7 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginView from "@/views/LoginView";
 import LayoutView from "@/views/LayoutView";
 import TaskLayout from "@/views/task/TaskLayout";
-import ActivityView from "@/views/task/ActivityView";
 import PromoView from "@/views/task/PromoView";
 import FansView from "@/views/task/FansView";
 import StatView from "@/views/task/StatView";
@@ -11,6 +10,8 @@ import MsgLayout from "@/views/msg/MsgLayout";
 import PushView from "@/views/msg/PushView";
 import SopView from "@/views/msg/SopView";
 import AuthView from "@/views/auth/AuthView";
+import ActivityList from "@/views/task/ActivityList";
+import ActivityCreate from "@/views/task/ActivityCreate";
 
 const routes = [
 
@@ -40,7 +41,19 @@ const routes = [
           {
             path: '/activity',
             name: 'Activity',
-            component: ActivityView
+            redirect:'/activitylist',
+            children:[
+              {
+                path: '/activitylist',
+                name: 'ActivityList',
+                component: ActivityList
+              },
+              {
+                path: '/activitycreate',
+                name: 'ActivityCreate',
+                component: ActivityCreate
+              },
+            ]
           },
           {
             path: '/promo',

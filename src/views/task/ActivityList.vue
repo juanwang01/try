@@ -1,0 +1,16 @@
+<template>
+    <router-link :to="{name:'ActivityCreate'}">创建活动</router-link>
+    <div>
+        活动列表
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "ActivityList"
+    }
+</script>
+
+<style scoped>
+
+</style>
