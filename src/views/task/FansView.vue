@@ -31,9 +31,21 @@
                     </el-button>
                 </div>
             </template>
+            <el-row type="flex" justify="end"  style="float: right;z-index: 999;">
+                <el-input
+                        style="margin-right: 10px;width: 120px"
+                        size="small"
+                        placeholder="请输入内容"
+                        suffix-icon="el-icon-search"
+                        v-model="keySearch">
+                </el-input>
+                <el-button size="small" type="primary">导出</el-button>
+                <el-button size="small" type="primary" @click="addToBlackList">移入黑名单</el-button>
+                <el-button size="small" type="primary">移出黑名单</el-button>
+            </el-row>
             <!--          内容-->
             <el-tabs v-model="activeName" @tab-click="handleClick2" lazy>
-                <el-tab-pane label="用户管理" name="first">
+                <el-tab-pane label="参与用户" name="first">
 
                     <div>
                         <el-table :data="tableData" border style="width: 100%">
@@ -63,9 +75,10 @@
                                        @current-change="changePage" :page-size="pageInfo.pageSize"/>
                     </el-row>
                 </el-tab-pane>
-                <el-tab-pane label="配置管理" name="second">
+                <el-tab-pane label="黑名单" name="second">
                     <div>
-                        <el-table :data="tableData" border style="width: 100%">
+                        <el-table :data="tableData" border style="width: 100%" @selection-change="changeSelect">
+                            <el-table-column type="selection" width="55" />
                             <el-table-column prop="date" label="日期"></el-table-column>
                             <el-table-column prop="name" label="姓名"></el-table-column>
                             <el-table-column prop="address" label="地址"></el-table-column>
@@ -209,6 +222,8 @@
                     region: '',
                 },
                 activeName: 'first',
+                keySearch:'',
+                changeSelectList:'',
             }
 
 
@@ -270,6 +285,15 @@
             },
             handleClick2(tab, event) {
                 console.log(tab, event);
+            },
+            changeSelect(selectList){
+                console.log("检查选中的数据：",selectList)
+                this.changeSelectList = selectList
+            },
+            addToBlackList(){
+                console.log('正在加入黑名单',this.changeSelectList)
+
+
             }
         }
 
