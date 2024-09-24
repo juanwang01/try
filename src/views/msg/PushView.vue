@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card style="padding:40px">
+        <el-card >
             <el-form :inline="true" class="demo-form-inline" :model="searchForm" ref="searchForm">
                 <el-form-item label="搜索" prop="title">
                     <el-input placeholder="请输入搜索内容" v-model="searchForm.title"></el-input>
