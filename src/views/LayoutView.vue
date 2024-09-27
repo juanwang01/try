@@ -10,11 +10,11 @@
                 <el-menu-item index="Msg" :route="{name:'Push'}">消息宝</el-menu-item>
                 <el-menu-item index="Auth" :route="{name:'Auth'}">授权</el-menu-item>
 
-                <el-submenu index="5" style="float: right">
-                    <template v-slot:title>{{username}}</template>
-                    <el-menu-item index="5-1">个人中心</el-menu-item>
-                    <el-menu-item index="5-2">注销</el-menu-item>
-                </el-submenu>
+                <el-sub-menu class="right-menu">
+                    <template v-slot:title>你好</template>
+                    <el-menu-item >个人中心</el-menu-item>
+                    <el-menu-item >注销</el-menu-item>
+                </el-sub-menu>
             </el-menu>
         </div>
         <div>
@@ -62,5 +62,15 @@
 </script>
 
 <style scoped>
+
+    .el-menu-demo {
+        position: relative;
+    }
+
+    .right-menu {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
 
 </style>
