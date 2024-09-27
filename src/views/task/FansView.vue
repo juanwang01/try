@@ -31,7 +31,9 @@
                     </el-button>
                 </div>
             </template>
-            <el-row type="flex" justify="end"  style="float: right;z-index: 999;">
+
+            <!--          内容-->
+            <el-row type="flex" style="float: right;z-index: 999;position: absolute; top: 40%; right: 2%;" class="search">
                 <el-input
                         style="margin-right: 10px;width: 120px"
                         size="small"
@@ -43,72 +45,75 @@
                 <el-button size="small" type="primary" @click="addToBlackList">移入黑名单</el-button>
                 <el-button size="small" type="primary">移出黑名单</el-button>
             </el-row>
-            <!--          内容-->
-            <el-tabs v-model="activeName" @tab-click="handleClick2" lazy>
-                <el-tab-pane label="参与用户" name="first">
 
-                    <div>
-                        <el-table :data="tableData" border style="width: 100%">
-                            <el-table-column prop="date" label="日期"></el-table-column>
-                            <el-table-column prop="name" label="姓名"></el-table-column>
-                            <el-table-column prop="address" label="地址"></el-table-column>
-                            <el-table-column label="状态">
-                                <template #default="scope">
-                                    <el-tag v-if="scope.row.status === 1" type="success">成功</el-tag>
-                                    <el-tag v-else type="danger">失败</el-tag>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作">
-                                <template #default="scope">
-                                    <el-button link type="primary" size="small" @click="handleClick(scope.row)">
-                                        查看
-                                    </el-button>
-                                    <!--                            <el-button link type="primary" size="small">删除</el-button>-->
-                                    <el-button plain @click="deleteLine(scope.row)" type="warning" size="small">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                    <el-row type="flex" justify="end">
-                        <el-pagination background layout="prev, pager, next" :total="pageInfo.total"
-                                       @current-change="changePage" :page-size="pageInfo.pageSize"/>
-                    </el-row>
-                </el-tab-pane>
-                <el-tab-pane label="黑名单" name="second">
-                    <div>
-                        <el-table :data="tableData" border style="width: 100%" @selection-change="changeSelect">
-                            <el-table-column type="selection" width="55" />
-                            <el-table-column prop="date" label="日期"></el-table-column>
-                            <el-table-column prop="name" label="姓名"></el-table-column>
-                            <el-table-column prop="address" label="地址"></el-table-column>
-                            <el-table-column label="状态">
-                                <template #default="scope">
-                                    <el-tag v-if="scope.row.status === 1" type="success">成功</el-tag>
-                                    <el-tag v-else type="danger">失败</el-tag>
-                                </template>
-                            </el-table-column>
-                            <el-table-column label="操作">
-                                <template #default="scope">
-                                    <el-button link type="primary" size="small" @click="handleClick(scope.row)">
-                                        查看
-                                    </el-button>
-                                    <!--                            <el-button link type="primary" size="small">删除</el-button>-->
-                                    <el-button plain @click="deleteLine(scope.row)" type="warning" size="small">删除
-                                    </el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                    <el-row type="flex" justify="end">
-                        <el-pagination background layout="prev, pager, next" :total="pageInfo.total"
-                                       @current-change="changePage" :page-size="pageInfo.pageSize"/>
-                    </el-row>
-                </el-tab-pane>
-            </el-tabs>
+            <div style="width: 100%; margin: 0;" class="changtab">
+                <el-tabs v-model="activeName" @tab-click="handleClick2" lazy style="position: relative">
+                    <el-tab-pane label="参与用户" name="first">
 
+                        <div>
+                            <el-table :data="tableData" border style="width: 100%; table-layout: fixed;">
+                                <el-table-column prop="date" label="日期"></el-table-column>
+                                <el-table-column prop="name" label="姓名"></el-table-column>
+                                <el-table-column prop="address" label="地址"></el-table-column>
+                                <el-table-column label="状态">
+                                    <template #default="scope">
+                                        <el-tag v-if="scope.row.status === 1" type="success">成功</el-tag>
+                                        <el-tag v-else type="danger">失败</el-tag>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="操作">
+                                    <template #default="scope">
+                                        <el-button link type="primary" size="small" @click="handleClick(scope.row)">
+                                            查看
+                                        </el-button>
+                                        <!--                            <el-button link type="primary" size="small">删除</el-button>-->
+                                        <el-button plain @click="deleteLine(scope.row)" type="warning" size="small">删除
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <el-row type="flex" justify="end">
+                            <el-pagination background layout="prev, pager, next" :total="pageInfo.total"
+                                           @current-change="changePage" :page-size="pageInfo.pageSize"/>
+                        </el-row>
+                    </el-tab-pane>
+                    <el-tab-pane label="黑名单" name="second">
+                        <div>
+                            <el-table :data="tableData" border style="width: 100%" @selection-change="changeSelect">
+                                <el-table-column type="selection" width="55"/>
+                                <el-table-column prop="date" label="日期"></el-table-column>
+                                <el-table-column prop="name" label="姓名"></el-table-column>
+                                <el-table-column prop="address" label="地址"></el-table-column>
+                                <el-table-column label="状态">
+                                    <template #default="scope">
+                                        <el-tag v-if="scope.row.status === 1" type="success">成功</el-tag>
+                                        <el-tag v-else type="danger">失败</el-tag>
+                                    </template>
+                                </el-table-column>
+                                <el-table-column label="操作">
+                                    <template #default="scope">
+                                        <el-button link type="primary" size="small" @click="handleClick(scope.row)">
+                                            查看
+                                        </el-button>
+                                        <!--                            <el-button link type="primary" size="small">删除</el-button>-->
+                                        <el-button plain @click="deleteLine(scope.row)" type="warning" size="small">删除
+                                        </el-button>
+                                    </template>
+                                </el-table-column>
+                            </el-table>
+                        </div>
+                        <el-row type="flex" justify="end">
+                            <el-pagination background layout="prev, pager, next" :total="pageInfo.total"
+                                           @current-change="changePage" :page-size="pageInfo.pageSize"/>
+                        </el-row>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
 
         </el-card>
+
+
     </div>
 
     <el-dialog v-model="dialogFormVisible" title="Shipping address" width="500">
@@ -222,8 +227,8 @@
                     region: '',
                 },
                 activeName: 'first',
-                keySearch:'',
-                changeSelectList:'',
+                keySearch: '',
+                changeSelectList: '',
             }
 
 
@@ -286,12 +291,12 @@
             handleClick2(tab, event) {
                 console.log(tab, event);
             },
-            changeSelect(selectList){
-                console.log("检查选中的数据：",selectList)
+            changeSelect(selectList) {
+                console.log("检查选中的数据：", selectList)
                 this.changeSelectList = selectList
             },
-            addToBlackList(){
-                console.log('正在加入黑名单',this.changeSelectList)
+            addToBlackList() {
+                console.log('正在加入黑名单', this.changeSelectList)
 
 
             }
@@ -304,7 +309,7 @@
 
 
 <style scoped>
-    .select{
+    .select {
         width: 170px;
     }
 
