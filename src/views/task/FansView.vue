@@ -3,14 +3,14 @@
         <el-card>
             <el-form :inline="true" class="demo-form-inline" :model="searchForm" ref="searchForm">
                 <el-form-item label="当前任务" prop="category">
-                    <el-select placeholder="当前任务" v-model="searchForm.category" @click="changeTask">
+                    <el-select placeholder="当前任务" v-model="searchForm.category" @click="changeTask" class="select">
                         <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label"
                                    :value=item.value></el-option>
                         <!--                        <el-option label="类型二" value="beijing"></el-option>-->
                     </el-select>
                 </el-form-item>
                 <el-form-item label="推广码" prop="category">
-                    <el-select placeholder="活动区域" v-model="searchForm.category">
+                    <el-select placeholder="活动区域" v-model="searchForm.category" class="select">
                         <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label"
                                    :value=item.value></el-option>
                         <!--                        <el-option label="类型二" value="beijing"></el-option>-->
@@ -304,5 +304,8 @@
 
 
 <style scoped>
+    .select{
+        width: 170px;
+    }
 
 </style>

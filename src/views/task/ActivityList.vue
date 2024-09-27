@@ -9,7 +9,7 @@
         <el-form :inline="true" class="demo-form-inline" size="small" :model="searchForm" ref="searchForm">
 
             <el-form-item label="活动状态" prop="category">
-                <el-select placeholder="全部状态" v-model="searchForm.category">
+                <el-select placeholder="全部状态" v-model="searchForm.category" class="select">
                     <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label"
                                :value="item.value"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
@@ -17,7 +17,7 @@
             </el-form-item>
 
             <el-form-item label="公众号" prop="category">
-                <el-select placeholder="全部公众号" v-model="searchForm.category">
+                <el-select placeholder="全部公众号" v-model="searchForm.category" class="select">
                     <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label"
                                :value="item.value"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
@@ -102,6 +102,9 @@
     .image {
         width: 100%;
         display: block;
+    }
+    .select{
+        width: 170px;
     }
 
 </style>

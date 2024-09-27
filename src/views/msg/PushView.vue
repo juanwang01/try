@@ -6,7 +6,7 @@
                     <el-input placeholder="请输入搜索内容" v-model="searchForm.title"></el-input>
                 </el-form-item>
                 <el-form-item label="类型" prop="category">
-                    <el-select placeholder="活动区域" v-model="searchForm.category">
+                    <el-select placeholder="活动区域" v-model="searchForm.category" class="select">
                         <el-option v-for="item in categoryOptions" :key="item.value" :label="item.label"
                                    :value=item.value></el-option>
                         <!--                        <el-option label="类型二" value="beijing"></el-option>-->
@@ -238,5 +238,8 @@
 
 
 <style scoped>
+    .select{
+        width: 170px;
+    }
 
 </style>
