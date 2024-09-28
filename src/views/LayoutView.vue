@@ -11,7 +11,7 @@
                 <el-menu-item index="Auth" :route="{name:'Auth'}">授权</el-menu-item>
 
                 <el-sub-menu class="right-menu">
-                    <template v-slot:title>你好</template>
+                    <template v-slot:title>{{username}}</template>
                     <el-menu-item >个人中心</el-menu-item>
                     <el-menu-item >注销</el-menu-item>
                 </el-sub-menu>
@@ -55,6 +55,7 @@
         },
         computed: {
             username() {
+                //直接去store里面拿
                 return this.$store.state.username;
             }
         }

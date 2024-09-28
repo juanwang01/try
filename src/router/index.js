@@ -12,6 +12,7 @@ import SopView from "@/views/msg/SopView";
 import AuthView from "@/views/auth/AuthView";
 import ActivityList from "@/views/task/ActivityList";
 import ActivityCreate from "@/views/task/ActivityCreate";
+import {gitToken} from "@/plugins/cookie";
 
 const routes = [
 
@@ -106,3 +107,27 @@ const router = createRouter({
 })
 
 export default router
+
+router.beforeEach((to, from, next) =>{
+  let token = gitToken();
+  console.log('进入导航守卫')
+  if (token){
+    console.log('有token，进行页面转跳')
+    next();
+    return
+  }
+
+  // 未登录，登入页面放行
+  if (to.name === "Login") {
+    next();
+    return;
+  }
+
+  console.log('没登入，返回登入页面')
+
+  // 未登录，跳转登录页面
+  next({name: 'Login'});
+
+
+
+})

@@ -1,5 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+
+import './plugins/cookie'
+
 import router from './router'
 import installElementPlus from './plugins/element'
 import store from './store'
