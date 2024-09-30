@@ -2,6 +2,7 @@ import axios from 'axios';
 import {gitToken} from "@/plugins/cookie";
 import router from "@/router";
 import ElMessage from "element-plus";
+import store from '@/store/index'
 
 const instance = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/',
@@ -38,7 +39,7 @@ instance.interceptors.response.use(function (response) {
     if (response.data.code === "2000") {
         console.log('进入响应拦截器1')
         // store中的logout方法
-        this.$store.commit("logout");
+        store.commit("logout");
         // 重定向登录页面  [Login,]
         // router.push({name:"Login"});
         router.replace({name: "Login"});
@@ -58,7 +59,7 @@ instance.interceptors.response.use(function (response) {
     if (error.response.status === 401) {
         console.log('进入响应拦截器4')
         // store中的logout方法
-        this.$store.commit("logout");
+        store.commit("logout");
         // 重定向登录页面  [Login,]
         // router.push({name:"Login"});
         router.replace({name: "Login"});

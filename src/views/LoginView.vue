@@ -30,8 +30,8 @@
                     </el-form-item>
                     <el-form-item prop="code">
                         <el-row type="flex" justify="space-between">
-                            <el-input v-model="smsForm.code" placeholder="验证码"></el-input>
-                            <el-button :disabled="btnSmsDisabled" @click="sendSmsCode" style="margin-left: 10px;">
+                            <el-input v-model="smsForm.code" placeholder="验证码" style="width: calc(100% - 120px);"></el-input>
+                            <el-button :disabled="btnSmsDisabled" @click="sendSmsCode" style="margin-left: 10px; width: 100px;">
                                 {{btnSmsText}}
                             </el-button>
                         </el-row>
@@ -106,41 +106,41 @@
                     // 验证通过，向后端的API发送请求
                     instance.post("http://127.0.0.1:8000/api/base/auth", this.userForm)
                         .then(response => {
-                        // res.data = {code:1000, detail:"...."}
-                        // res.data = {code:0, detail:"....", data:{ username:"用户名", token:"jwt"}}
-                        console.log('打印用户输入',this.userForm)
-                        console.log('打印res',response.data)
-                        console.log('打印res',response.data.code)
-                        console.log('打印res',response.data.data.username)
-                        console.log('打印res',response.data.data.token)
+                            // res.data = {code:1000, detail:"...."}
+                            // res.data = {code:0, detail:"....", data:{ username:"用户名", token:"jwt"}}
+                            console.log('打印用户输入', this.userForm)
+                            console.log('打印res', response.data)
+                            console.log('打印res', response.data.code)
+                            console.log('打印res', response.data.data.username)
+                            console.log('打印res', response.data.data.token)
 
-                        if (response.data.code === 0) {
-                            // 登录成功：写入cookie、写入state
-                            console.log('打印res',response.data.data.token)
-                            this.$store.commit("login", response.data.data);
+                            if (response.data.code === 0) {
+                                // 登录成功：写入cookie、写入state
+                                console.log('打印res', response.data.data.token)
+                                this.$store.commit("login", response.data.data);
 
-                            console.log('测试store：',this.$store.state.username,this.$store.state.token)
-                            //进行页面转跳
-                            this.$router.push({path: "/"})
-                            return
-                        }
-                        // 1000，字段错误，把相关错误信息现在标签上
-                        if (response.data.code === 1000) {
-                            // 不好弄，API获取数据，错误显示表单。
-                            // detail = { username:['错误',] ,password: [11,22] }
-                            //错误信息显示
-                            this.validateFormFailed(response.data.detail);
-                            return;
-                        }
-                        // 1001，整体错误，整体显示
-                        if (response.data.code === 1001) {
-                            //自带的方法this.$message.error，显示弹窗（element ui）
-                            this.$message.error(response.data.detail);
-                        } else {
-                            this.$message.error("请求失败");
-                        }
+                                console.log('测试store：', this.$store.state.username, this.$store.state.token)
+                                //进行页面转跳
+                                this.$router.push({path: "/"})
+                                return
+                            }
+                            // 1000，字段错误，把相关错误信息现在标签上
+                            if (response.data.code === 1000) {
+                                // 不好弄，API获取数据，错误显示表单。
+                                // detail = { username:['错误',] ,password: [11,22] }
+                                //错误信息显示
+                                this.validateFormFailed(response.data.detail);
+                                return;
+                            }
+                            // 1001，整体错误，整体显示
+                            if (response.data.code === 1001) {
+                                //自带的方法this.$message.error，显示弹窗（element ui）
+                                this.$message.error(response.data.detail);
+                            } else {
+                                this.$message.error("请求失败");
+                            }
 
-                    }).catch(error => {
+                        }).catch(error => {
                         console.error('请求失败', error);
                     });
                 });
