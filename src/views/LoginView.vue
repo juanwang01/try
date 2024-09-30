@@ -48,6 +48,8 @@
 </template>
 
 <script>
+    import instance from "@/plugins/axios";
+
     export default {
         name: "LoginView",
         data() {
@@ -58,6 +60,7 @@
                     username: "",
                     password: ""
                 },
+                //绑定:error属性，属性绑定具体错误字段
                 userFormError: {
                     username: "",
                     password: ""
@@ -92,7 +95,7 @@
             submitForm(formName) {
                 // 清空原来的错误
                 this.clearCustomFormError();
-
+                console.log('发送登入请求')
                 // 执行验证规则
                 this.$refs[formName].validate((valid) => {
                     if (!valid) {
@@ -101,29 +104,44 @@
                     }
                     // console.log("验证通过");
                     // 验证通过，向后端的API发送请求
-                    this.axios.post("/base/auth/", this.userForm).then(res => {
+                    instance.post("http://127.0.0.1:8000/api/base/auth", this.userForm)
+                        .then(response => {
                         // res.data = {code:1000, detail:"...."}
                         // res.data = {code:0, detail:"....", data:{ username:"用户名", token:"jwt"}}
-                        if (res.data.code === 0) {
+                        console.log('打印用户输入',this.userForm)
+                        console.log('打印res',response.data)
+                        console.log('打印res',response.data.code)
+                        console.log('打印res',response.data.data.username)
+                        console.log('打印res',response.data.data.token)
+
+                        if (response.data.code === 0) {
                             // 登录成功：写入cookie、写入state
-                            this.$store.commit("login", res.data.data);
+                            console.log('打印res',response.data.data.token)
+                            this.$store.commit("login", response.data.data);
+
+                            console.log('测试store：',this.$store.state.username,this.$store.state.token)
+                            //进行页面转跳
                             this.$router.push({path: "/"})
                             return
                         }
                         // 1000，字段错误，把相关错误信息现在标签上
-                        if (res.data.code === 1000) {
+                        if (response.data.code === 1000) {
                             // 不好弄，API获取数据，错误显示表单。
                             // detail = { username:['错误',] ,password: [11,22] }
-                            this.validateFormFailed(res.data.detail);
+                            //错误信息显示
+                            this.validateFormFailed(response.data.detail);
                             return;
                         }
                         // 1001，整体错误，整体显示
-                        if (res.data.code === 1001) {
-                            this.$message.error(res.data.detail);
+                        if (response.data.code === 1001) {
+                            //自带的方法this.$message.error，显示弹窗（element ui）
+                            this.$message.error(response.data.detail);
                         } else {
                             this.$message.error("请求失败");
                         }
 
+                    }).catch(error => {
+                        console.error('请求失败', error);
                     });
                 });
             },
@@ -150,12 +168,15 @@
                 })
             },
             validateFormFailed(errorData) {
+                //这里循环的是键值
                 for (let fieldName in errorData) {
                     let error = errorData[fieldName][0];
+                    //添加🈲错误表单
                     this.userFormError[fieldName] = error;
                 }
             },
             clearCustomFormError() {
+                //循环读取错误列表，制空
                 for (let key in this.userFormError) {
                     this.userFormError[key] = ""
                 }

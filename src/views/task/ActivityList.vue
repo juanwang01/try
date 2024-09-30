@@ -58,6 +58,9 @@
 </template>
 
 <script>
+    import {gitToken} from "@/plugins/cookie";
+    import instance from "@/plugins/axios";
+
     export default {
         name: "ActivityList",
         data() {
@@ -85,6 +88,15 @@
                     }],
                 // currentDate: new Date()
             }
+        },
+        created() {
+            instance.get("http://127.0.0.1:8000/api/base/test").then(res => {
+                console.log("请求成功", res);
+            }).catch(reason => {
+                console.log('打印cookie',gitToken())
+                console.log('请求失败', reason);
+                return reason;
+            })
         },
         methods: {
 

@@ -47,14 +47,14 @@
                                     <el-image
                                             style="width: 30px; height: 30px"
                                             :src="scope.row.url"
-                                            :fit="fit"></el-image>
+                                            ></el-image>
 
                                 </template>
                                 <div>
                                     <el-image
                                             style="width: 100px; height: 100px"
                                             :src="scope.row.url"
-                                            :fit="fit"></el-image>
+                                            ></el-image>
                                 </div>
 
 

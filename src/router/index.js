@@ -13,6 +13,8 @@ import AuthView from "@/views/auth/AuthView";
 import ActivityList from "@/views/task/ActivityList";
 import ActivityCreate from "@/views/task/ActivityCreate";
 import {gitToken} from "@/plugins/cookie";
+import TextView from "@/views/TextView";
+
 
 const routes = [
 
@@ -26,6 +28,11 @@ const routes = [
     name: 'Layout',
     component: LayoutView,
     children:[
+      {
+        path: '/text',
+        name: 'Text',
+        component: TextView,
+      },
       {
         path: '/',
         redirect:'/task'
@@ -109,8 +116,10 @@ const router = createRouter({
 export default router
 
 router.beforeEach((to, from, next) =>{
+  //测试cookie是否过期
+
   let token = gitToken();
-  console.log('进入导航守卫')
+  console.log('进入导航守卫',token)
   if (token){
     console.log('有token，进行页面转跳')
     next();
